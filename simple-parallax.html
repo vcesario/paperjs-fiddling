@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>paperjs fooling around</title>
+	<title>parallax</title>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.5/paper-full.min.js"></script>
 	<script type="text/paperscript" canvas="cnvs">
@@ -16,8 +16,7 @@
 		var lastDelta = new Point(0, 1);
 
 		function init(){
-			console.log("called!");
-			maxRadius = 30;
+			maxRadius = 15;
 			numOfCircles = 150;
 			circles = [];
 
@@ -78,12 +77,11 @@
 
 	<style type="text/css">
 		canvas {
-			width: 100%;
 			background: black;
 		}
 	</style>
 </head>
 <body>
-	<canvas id="cnvs" resize></canvas>
+	<canvas id="cnvs" width="600" height="600"></canvas>
 </body>
 </html>
