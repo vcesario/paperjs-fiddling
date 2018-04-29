@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>starfield</title>
+	<!-- based on:
+		https://cs.brynmawr.edu/gxk2013/examples/transformations/starfield/
+		https://github.com/CodingTrain/website/blob/master/CodingChallenges/CC_01_StarField/Star.pde -->
+
+	<style type="text/css">
+		canvas {
+			background: black;
+		}
+	</style>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.5/paper-full.min.js"></script>
+	<script type="text/paperscript" canvas="cnvs">
+		project.currentStyle = {
+			fillColor: 'yellow'
+		};
+
+		var speed = 3.1;
+		var starSize = 8;
+		var starCount = 1000;
+		var stars = [];
+
+		for (var i = 0; i < starCount; i++){
+			var pos = (new Point.random() - new Point(.5, .5)) * view.size;
+			stars[i] = new Shape.Circle({
+				center: pos,
+				radius: starSize,
+				z: Math.random() * view.size.width / 2,
+				fillColor: new Color(Math.random(), Math.random(), Math.random()),
+				fixedCenter: pos
+			});
+		}
+
+		view.translate(view.size / 2);
+
+		function onFrame(){
+			for (var i = stars.length - 1; i >= 0; i--) {
+				stars[i].z -= speed;
+				if (stars[i].z < 1){
+					var pos = (new Point.random() - new Point(.5, .5)) * view.size;
+					stars[i].fixedCenter = pos;
+					stars[i].z = view.size.width / 2;
+				}
+				else {
+					var p = stars[i].fixedCenter;
+					var sp = new Point(p.x / stars[i].z, p.y / stars[i].z) * view.size;
+					stars[i].position = sp;
+
+					stars[i].scaling = 1 - stars[i].z / (view.size.width / 2);
+
+					stars[i].fillColor.hue++;
+				}
+			}
+		}
+
+		function onMouseMove(event){
+			view.translate(- event.delta / 2);
+		}
+	</script>
+</head>
+<body>
+	<canvas id="cnvs" width="600" height="600"></canvas>
+</body>
+</html>
